@@ -1,0 +1,19 @@
+- Skeleton
+
+- Db Repo
+- Store
+- Repo tests
+
+- Command handler
+- Event handler
+- Survey instruments domain
+- Domain tests
+
+- Basic Express API
+- Basic auth middleware
+- Pagination middleware
+- Error handling middleware
+
+- Services dockerization
+- CI pipeline?
+- CD pipeline
