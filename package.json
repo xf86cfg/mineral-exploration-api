@@ -40,6 +40,8 @@
     "mongo:docker": "docker run --name mongodb -v mongodata:/data/db -d -p 27017:27017 mongo",
     "mongo:shell": "docker exec -it mongodb mongo",
     "mongo:kill": "docker kill mongodb",
-    "mongo:remove": "docker container rm -f -v mongodb && docker volume rm mongodata"
+    "mongo:remove": "docker container rm -f -v mongodb && docker volume rm mongodata",
+    "test": "env-cmd -f test.env mocha -t 20000 --reporter spec --exit 'dist/**/*.spec.js'",
+    "testonly": "env-cmd -f test.env mocha -t 20000 --exit 'dist/**/*.spec.js'"
   }
 }
