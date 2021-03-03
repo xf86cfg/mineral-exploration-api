@@ -1,8 +1,8 @@
 + Skeleton
 
-- Db Repo
-- Store
-- Repo tests
++ Db Repo
++ Store
++ Repo tests
 
 - Command handler
 - Event handler
