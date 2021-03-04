@@ -95,9 +95,9 @@ export function createStoreWriter<TEvt extends ESEvent>(storeName: string) {
   }
 }
 
-export function createStoreBookmark(storeName: string, name: string) {
+export function createStoreBookmark(name: string) {
   const get = async (): Promise<Timestamp> => {
-    const position = await bookmarks(storeName, collection =>
+    const position = await bookmarks(collection =>
       collection.findOne({ key: name })
     )
     if (!position) {
@@ -108,7 +108,7 @@ export function createStoreBookmark(storeName: string, name: string) {
   }
 
   const set = async (position: Timestamp) => {
-    await bookmarks(storeName, collection =>
+    await bookmarks(collection =>
       collection.updateOne(
         { key: name },
         { $set: { bookmark: position }, $currentDate: { lastUpdate: true } },

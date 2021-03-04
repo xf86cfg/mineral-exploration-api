@@ -76,16 +76,33 @@ describe('Repo tests', async () => {
   })
 
   it('Will ensure repo reader reads events from empty bookmark', async () => {
-    const bookmark = createStoreBookmark(eventStore, 'test-bookmark')
+    const bookmark = createStoreBookmark('test-bookmark')
     const position = await bookmark.get()
     const reader = createStoreReader(eventStore)
     const events = reader.getFromPosition(position)
 
-    for await (const { version, event } of events) {
+    for await (const { version, event, position } of events) {
       const ev = tests[version - 1]
       expect({ event }).to.be.deep.equal({
         event: ev,
       })
+      await bookmark.set(position)
     }
+  })
+
+  it('Will ensure repo reader reads events from persisted bookmark', async () => {
+    const bookmark = createStoreBookmark('test-bookmark')
+    const position = await bookmark.get()
+    const reader = createStoreReader(eventStore)
+    const events = reader.getFromPosition(position)
+
+    let actual = []
+
+    for await (const event of events) {
+      actual.push(event)
+      await bookmark.set(position)
+    }
+
+    expect(actual).to.be.deep.equal([])
   })
 })
