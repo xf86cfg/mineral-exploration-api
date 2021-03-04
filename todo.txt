@@ -12,9 +12,10 @@
 + Basic Express API
 - Basic auth middleware
 - Pagination middleware
+- Async middleware
 + Error handling middleware
 + Log middleware
 
-- Services dockerization
++ Services dockerization
 - CI pipeline?
 - CD pipeline
