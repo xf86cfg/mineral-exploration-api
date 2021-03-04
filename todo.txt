@@ -9,10 +9,11 @@
 - Survey instruments domain
 - Domain tests
 
-- Basic Express API
++ Basic Express API
 - Basic auth middleware
 - Pagination middleware
-- Error handling middleware
++ Error handling middleware
++ Log middleware
 
 - Services dockerization
 - CI pipeline?

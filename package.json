@@ -35,6 +35,7 @@
   "scripts": {
     "build": "tsc",
     "start": "tsc && node dist/index.js",
+    "start:api": "tsc && node dist/services/api.js",
     "printenv": "printenv",
     "watch": "nodemon --exec ts-node --files src/index.ts",
     "mongo:docker": "docker run --name mongodb -v mongodata:/data/db -d -p 27017:27017 mongo",
