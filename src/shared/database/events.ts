@@ -3,7 +3,7 @@ import { config } from '../../config'
 import { ESEvent, StoredESEvent } from '../store/types'
 import { getDbName } from './utils'
 
-export const Bookmarks = 'bookmarksStore'
+export const BookmarkStore = 'bookmarkStore'
 export const EventStore = 'eventStore'
 
 type BookmarkDocument = {
@@ -29,7 +29,7 @@ export async function bookmarks<T>(
   callback: (collection: Collection<BookmarkDocument>) => T
 ) {
   return repoDb
-    .then(db => db.collection<BookmarkDocument>(Bookmarks))
+    .then(db => db.collection<BookmarkDocument>(BookmarkStore))
     .then(callback)
 }
 
