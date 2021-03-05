@@ -11,7 +11,9 @@ timeSeriesHandler.register(async ({ event, timestamp, version }) => {
       timestamp,
       latitude: event.latitude,
       longitude: event.longitude,
-      metadata: event.metadata,
+      depth: event.depth,
+      dip: event.dip,
+      azimuth: event.azimuth,
     })
   )
 })

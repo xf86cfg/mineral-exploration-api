@@ -1,22 +1,17 @@
-export type ReadingCommand = {
-  readerId: string
-  latitude: number
-  longitude: number
-  metadata: any
-}
+export type ReadingCommand = Reading
 
-export type ReadingEvent = {
-  readerId: string
-  latitude: number
-  longitude: number
-  metadata: any
-}
+export type ReadingEvent = Reading
 
-export type TimeSeriesReading = {
-  readerId: string
-  latitude: number
-  longitude: number
-  metadata: any
+export type TimeSeriesReading = Reading & {
   version: number
   timestamp: Date
+}
+
+export type Reading = {
+  readerId: string
+  latitude: number
+  longitude: number
+  depth: number
+  dip: number
+  azimuth: number
 }

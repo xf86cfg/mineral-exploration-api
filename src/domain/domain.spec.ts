@@ -12,7 +12,9 @@ describe('Handlers tests', async () => {
       readerId: 'reader-1',
       latitude: 12.345678,
       longitude: 23.456789,
-      metadata: 'data-1',
+      depth: 1,
+      dip: 1,
+      azimuth: 1,
     })
     expect(actual1).to.be.deep.equal({ version: 1 })
 
@@ -20,7 +22,9 @@ describe('Handlers tests', async () => {
       readerId: 'reader-1',
       latitude: 12.345678,
       longitude: 23.456789,
-      metadata: 'data-2',
+      depth: 1,
+      dip: 1,
+      azimuth: 1,
     })
     expect(actual2).to.be.deep.equal({ version: 2 })
 
@@ -28,7 +32,9 @@ describe('Handlers tests', async () => {
       readerId: 'reader-2',
       latitude: 12.345678,
       longitude: 23.456789,
-      metadata: 'data-3',
+      depth: 1,
+      dip: 1,
+      azimuth: 1,
     })
     expect(actual3).to.be.deep.equal({ version: 1 })
   })
