@@ -36,8 +36,10 @@ router.post(
 router.get(
   '/',
   asyncHandler(async (req: Request, res: Response) => {
-    const request = req.body as ReadingBody
-    if (!(request.latitude && request.longitude)) {
+    const latitude = req.query['latitude']
+    const longitude = req.query['longitude']
+
+    if (!(latitude && longitude)) {
       return res.status(400).send()
     }
 
@@ -45,8 +47,8 @@ router.get(
       callback =>
         callback
           .find({
-            latitude: request.latitude,
-            longitude: request.longitude,
+            latitude: +latitude,
+            longitude: +longitude,
           })
           .project({
             _id: 0,
@@ -61,8 +63,10 @@ router.get(
 router.get(
   '/invalid',
   asyncHandler(async (req: Request, res: Response) => {
-    const request = req.body as ReadingBody
-    if (!(request.latitude && request.longitude)) {
+    const latitude = req.query['latitude']
+    const longitude = req.query['longitude']
+
+    if (!(latitude && longitude)) {
       return res.status(400).send()
     }
 
@@ -70,8 +74,8 @@ router.get(
       callback =>
         callback
           .find({
-            latitude: request.latitude,
-            longitude: request.longitude,
+            latitude: +latitude,
+            longitude: +longitude,
           })
           .project({
             _id: 0,
