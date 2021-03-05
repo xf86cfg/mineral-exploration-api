@@ -22,6 +22,34 @@ export function createStoreReader<TEvt extends ESEvent>(storeName: string) {
     yield* events
   }
 
+  async function getBeforePosition(
+    readerId: string,
+    position: Timestamp,
+    limit: number
+  ) {
+    if (!readerId) {
+      return
+    }
+
+    const events = await collection.then(c =>
+      c
+        .find<StoredESEvent<TEvt>>(
+          {
+            readerId,
+            position: {
+              $lt: position,
+            },
+          },
+          {
+            sort: { position: 1 },
+            limit,
+          }
+        )
+        .toArray()
+    )
+    return events
+  }
+
   const idCollection = getCollectionReference(storeName)
   async function* get(readerId: string) {
     if (!readerId) {
@@ -63,6 +91,7 @@ export function createStoreReader<TEvt extends ESEvent>(storeName: string) {
     get, // SG: This is exposed for testing purposes only
     getLast,
     getFromPosition,
+    getBeforePosition,
   }
 }
 

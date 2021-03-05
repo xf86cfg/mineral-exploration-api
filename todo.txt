@@ -8,18 +8,18 @@
 + Event handler
 + Survey instruments domain
 + Domain tests
-- Readmodels populators
++ Readmodels populators
 + Indexes
 
 
 + Basic Express API
-- Basic auth middleware
-- Pagination middleware
++ Basic auth middleware (on API gateway)
+-- Pagination middleware (didn't have time for that)
 + Async middleware
 + Error handling middleware
 + Log middleware
-- API route handlers
++ API route handlers
 
 + Services dockerization
-- CI pipeline?
+-- CI pipeline? (didn't have time for that)
 - CD pipeline

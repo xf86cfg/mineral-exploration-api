@@ -21,7 +21,7 @@ type Config = {
 
 const defaultConfig: Readonly<Config> = {
   appEnv: 'dev',
-  appPort: 4000,
+  appPort: 3000,
   mongoUri: 'mongodb://127.0.0.1:27017',
 }
 

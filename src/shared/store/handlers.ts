@@ -50,7 +50,7 @@ export function createCommandHandler<
 export function createEventHandler(bookmarkName: string) {
   const reader = createStoreReader(EventStore)
   const bookmark = createStoreBookmark(bookmarkName)
-  const logger = createLogger(EventStore)
+  const logger = createLogger(bookmarkName)
 
   let eventHandler: any = undefined
   let processing = false

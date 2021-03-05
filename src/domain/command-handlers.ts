@@ -44,6 +44,7 @@ export const readingCmd = {
         depth: cmd.depth,
         dip: cmd.dip,
         azimuth: cmd.azimuth,
+        invalid: cmd.invalid,
       }
     }
   ),

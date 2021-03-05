@@ -1,13 +1,13 @@
 import { loadEnv } from '../config'
-import { eventHandlers } from '../domain/event-handlers'
+import { readModelPopulators } from '../domain/event-handlers'
 loadEnv()
 
 import { createLogger } from '../shared/logger'
 
 const logger = createLogger('handlers-service')
 
-for (const handler of eventHandlers) {
-  handler.start()
+for (const populator of readModelPopulators) {
+  populator.start()
 }
 
-logger.info('Event handlers started', { count: eventHandlers.length })
+logger.info('Event handlers started', { count: readModelPopulators.length })

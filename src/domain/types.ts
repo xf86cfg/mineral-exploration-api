@@ -14,4 +14,5 @@ export type Reading = {
   depth: number
   dip: number
   azimuth: number
+  invalid?: boolean
 }

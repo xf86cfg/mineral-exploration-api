@@ -2,7 +2,10 @@ import { Request, Response, Router } from 'express'
 import { asyncHandler } from '../middleware'
 import { Reading } from '../../domain/types'
 import { readingCmd } from '../../domain/command-handlers'
-import { timeSeriesReadings } from '../../shared/database/read-models'
+import {
+  timeSeriesInvalidReadings,
+  timeSeriesReadings,
+} from '../../shared/database/read-models'
 
 const router = Router()
 
@@ -23,6 +26,7 @@ router.post(
       dip: request.dip,
       depth: request.depth,
       azimuth: request.azimuth,
+      invalid: request.invalid,
     })
 
     return res.status(201).send({ version })
@@ -51,6 +55,31 @@ router.get(
     )
 
     return res.status(201).send({ readings })
+  })
+)
+
+router.get(
+  '/invalid',
+  asyncHandler(async (req: Request, res: Response) => {
+    const request = req.body as ReadingBody
+    if (!(request.latitude && request.longitude)) {
+      return res.status(400).send()
+    }
+
+    const invalidReadings = await timeSeriesInvalidReadings(
+      callback =>
+        callback
+          .find({
+            latitude: request.latitude,
+            longitude: request.longitude,
+          })
+          .project({
+            _id: 0,
+          })
+          .toArray() // SG: Deferred iterator with pagination has to be implemented here for production phase.
+    )
+
+    return res.status(201).send({ invalidReadings })
   })
 )
 
