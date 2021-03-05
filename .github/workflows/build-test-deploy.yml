@@ -1,36 +1,126 @@
-# This is a basic workflow to help you get started with Actions
+name: build-test-deploy
 
-name: CI
-
-# Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  build-test-deploy:
+    name: Build-Test-Deploy
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    strategy:
+      matrix:
+        node-version: ['12.x']
+        mongodb-version: ['4.2']
+
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.3.0
+        with:
+          mongodb-version: ${{ matrix.mongodb-version }}
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build codebase
+        run: yarn build
+        env:
+          CI: true
+
+      - name: Run unit tests
+        run: yarn test
+
+      ### DEPLOY SECTION START
+
+      - name: Set AWS credentials globally
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: object-undefined
+          IMAGE_TAG: ${{ github.sha }}
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+      ##### Run Migrator task
+
+      - name: Fill in the new image ID in Migrator task definition
+        id: task-def-migrator
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: .github/workflows/cd/task-definition-migrator.json
+          container-name: mineral-exploration-api-migrator
+          image: ${{ steps.build-image.outputs.image }}
+
+      - name: Show task definition
+        run: cat ${{ steps.task-def-migrator.outputs.task-definition }}
+
+      - name: Deploy Migrator task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def-migrator.outputs.task-definition }}
+          service: mineral-exploration-api-migrator
+          cluster: object-undefined
+
+      - name: Run migrator task once
+        run: aws ecs run-task --cluster object-undefined --count 1 --launch-type EC2 --task-definition $(aws ecs list-task-definitions | grep mineral-exploration-api-migrator | tail -1 | sed 's,"\|\,,,g')
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+
+      ##### Deploy API service
+
+      - name: Fill in the new image ID in API task definition
+        id: task-def-api
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: .github/workflows/cd/task-definition-api.json
+          container-name: mineral-exploration-api
+          image: ${{ steps.build-image.outputs.image }}
+
+      - name: Deploy API task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def-api.outputs.task-definition }}
+          service: mineral-exploration-api
+          cluster: object-undefined
+
+      ##### Deploy Handlers service
+
+      - name: Fill in the new image ID in Handlers task definition
+        id: task-def-handlers
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: .github/workflows/cd/task-definition-handlers.json
+          container-name: mineral-exploration-api-handlers
+          image: ${{ steps.build-image.outputs.image }}
+
+      - name: Deploy Handlers task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def-handlers.outputs.task-definition }}
+          service: mineral-exploration-api-handlers
+          cluster: object-undefined
