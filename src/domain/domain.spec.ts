@@ -1,9 +1,8 @@
 import { resetTestDb } from '../test-helpers'
 import { readingCmd } from './command-handlers'
 import { expect } from 'chai'
-import { timeSeriesHandler } from './event-handlers'
 
-describe('Handlers tests', async () => {
+describe.only('Handlers tests', async () => {
   before(async () => {
     await resetTestDb()
   })
@@ -35,9 +34,5 @@ describe('Handlers tests', async () => {
       metadata: 'data-3',
     })
     expect(actual3).to.be.deep.equal({ version: 1 })
-  })
-
-  it('Will ensure event handler handles events', async () => {
-    timeSeriesHandler.startOnce()
   })
 })

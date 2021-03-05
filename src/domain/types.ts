@@ -13,3 +13,12 @@ export type ReadingEvent = {
   longitude: number
   metadata: any
 }
+
+export type TimeSeriesReading = {
+  aggregateId: string
+  latitude: number
+  longitude: number
+  metadata: any
+  version: number
+  timestamp: Date
+}

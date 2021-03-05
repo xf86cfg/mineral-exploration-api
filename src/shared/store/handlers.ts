@@ -1,3 +1,4 @@
+import { ReadingEvent } from '../../domain/types'
 import { EventStore } from '../database/events'
 import { createLogger } from '../logger'
 import {
@@ -56,7 +57,9 @@ export function createEventHandler(bookmarkName: string) {
   let processedEvents = 0
   let cycles = 0
 
-  function register(handler: (event: StoredESEvent<ESEvent>) => Promise<void>) {
+  function register(
+    handler: (event: StoredESEvent<ReadingEvent>) => Promise<void>
+  ) {
     eventHandler = handler
   }
 
