@@ -4,15 +4,18 @@
 + Store
 + Repo tests
 
-- Command handler
-- Event handler
-- Survey instruments domain
++ Command handler
++ Event handler
++ Survey instruments domain
 - Domain tests
+- Readmodels populators
+- Indexes
+
 
 + Basic Express API
 - Basic auth middleware
 - Pagination middleware
-- Async middleware
++ Async middleware
 + Error handling middleware
 + Log middleware
 

@@ -5,10 +5,6 @@ export type Command = {
   type: string
 }
 
-export type Aggregate = {
-  aggregateId: string
-  version: number
-}
 export type ESEvent = {
   type: string
   aggregateId: string
