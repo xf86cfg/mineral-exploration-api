@@ -24,7 +24,7 @@ export function createCommandHandler<
     // TODO: Backoff mechanism
     while (true) {
       try {
-        const lastReading = await reader.getLast(cmd.aggregateId)
+        const lastReading = await reader.getLast(cmd.readerId)
         const event = await handler(cmd)
         if (event) {
           const persisted = await writer.append(

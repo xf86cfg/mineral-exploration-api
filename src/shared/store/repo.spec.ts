@@ -7,19 +7,19 @@ import {
 } from './repo'
 
 type Event = {
-  aggregateId: string
+  readerId: string
   payload: any
 }
 
 const tests: Event[] = [
   {
-    aggregateId: 'instrument-1',
+    readerId: 'instrument-1',
     payload: {
       data: 'data-1',
     },
   },
   {
-    aggregateId: 'instrument-1',
+    readerId: 'instrument-1',
     payload: {
       data: 'data-2',
     },

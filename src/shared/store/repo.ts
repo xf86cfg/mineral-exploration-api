@@ -23,15 +23,15 @@ export function createStoreReader<TEvt extends ESEvent>(storeName: string) {
   }
 
   const idCollection = getCollectionReference(storeName)
-  async function* get(aggregateId: string) {
-    if (!aggregateId) {
+  async function* get(readerId: string) {
+    if (!readerId) {
       return
     }
 
     const events = await idCollection.then(c =>
       c.find<StoredESEvent<TEvt>>(
         {
-          aggregateId,
+          readerId,
         },
         {
           sort: { version: 1 },
@@ -41,15 +41,15 @@ export function createStoreReader<TEvt extends ESEvent>(storeName: string) {
     yield* events
   }
 
-  async function getLast(aggregateId: string) {
-    if (!aggregateId) {
+  async function getLast(readerId: string) {
+    if (!readerId) {
       return
     }
 
     const event = await idCollection.then(c =>
       c.findOne<StoredESEvent<TEvt>>(
         {
-          aggregateId,
+          readerId,
         },
         {
           sort: { version: -1 },
@@ -71,7 +71,7 @@ export function createStoreWriter<TEvt extends ESEvent>(storeName: string) {
 
   async function append(version: number, event: TEvt) {
     const tentativeEvent = {
-      aggregateId: event.aggregateId,
+      readerId: event.readerId,
       version: ++version,
       event,
       position: new Timestamp(0, 0),

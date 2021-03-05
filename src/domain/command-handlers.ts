@@ -9,7 +9,7 @@ export const readingCmd = {
         throw new CommandHandlerError(`Invalid coordinates at reading: ${cmd}`)
       }
       return {
-        aggregateId: cmd.aggregateId,
+        readerId: cmd.readerId,
         type: 'ReadingRecorded',
         latitude: cmd.latitude,
         longitude: cmd.longitude,

@@ -1,19 +1,19 @@
 export type ReadingCommand = {
-  aggregateId: string
+  readerId: string
   latitude: number
   longitude: number
   metadata: any
 }
 
 export type ReadingEvent = {
-  aggregateId: string
+  readerId: string
   latitude: number
   longitude: number
   metadata: any
 }
 
 export type TimeSeriesReading = {
-  aggregateId: string
+  readerId: string
   latitude: number
   longitude: number
   metadata: any

@@ -6,7 +6,7 @@ export const timeSeriesHandler = createEventHandler('time-series')
 timeSeriesHandler.register(async ({ event, timestamp, version }) => {
   await timeSeriesReadings(callback =>
     callback.insertOne({
-      aggregateId: event.aggregateId,
+      readerId: event.readerId,
       version,
       timestamp,
       latitude: event.latitude,

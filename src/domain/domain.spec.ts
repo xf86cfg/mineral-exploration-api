@@ -9,7 +9,7 @@ describe('Handlers tests', async () => {
 
   it('Will ensure command handler produces events', async () => {
     const actual1 = await readingCmd.RecordReading({
-      aggregateId: 'reader-1',
+      readerId: 'reader-1',
       latitude: 12.345678,
       longitude: 23.456789,
       metadata: 'data-1',
@@ -17,7 +17,7 @@ describe('Handlers tests', async () => {
     expect(actual1).to.be.deep.equal({ version: 1 })
 
     const actual2 = await readingCmd.RecordReading({
-      aggregateId: 'reader-1',
+      readerId: 'reader-1',
       latitude: 12.345678,
       longitude: 23.456789,
       metadata: 'data-2',
@@ -25,7 +25,7 @@ describe('Handlers tests', async () => {
     expect(actual2).to.be.deep.equal({ version: 2 })
 
     const actual3 = await readingCmd.RecordReading({
-      aggregateId: 'reader-2',
+      readerId: 'reader-2',
       latitude: 12.345678,
       longitude: 23.456789,
       metadata: 'data-3',

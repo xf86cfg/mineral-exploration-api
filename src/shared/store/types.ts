@@ -1,15 +1,15 @@
 import { Timestamp } from 'mongodb'
 
 export type Command = {
-  aggregateId: string
+  readerId: string
 }
 
 export type ESEvent = {
-  aggregateId: string
+  readerId: string
 }
 
 export type StoredESEvent<T extends ESEvent> = {
-  aggregateId: string
+  readerId: string
   position: Timestamp // To guarantee unique incremental ID in MongoDB cluster
   event: T // Wrapped event
   version: number

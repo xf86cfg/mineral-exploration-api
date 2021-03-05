@@ -3,14 +3,18 @@ import * as path from 'path'
 import { database, up } from 'migrate-mongo'
 import { DbIndexEnsureFunc } from './types'
 import { createLogger } from '../shared/logger'
-
-// import { ensureModelsIndexes } from './models-indexes'
+import { ensureModelsIndexes } from './rm-indexes'
 
 export async function migrate() {
   await run(
     'event-stores',
     path.resolve(__dirname, 'es-settings.js'),
     ensureESIndexes()
+  )
+  await run(
+    'read-models',
+    path.resolve(__dirname, 'rm-settings.js'),
+    ensureModelsIndexes()
   )
 }
 async function run(

@@ -13,7 +13,7 @@ export function ensureESIndexes(): DbIndexEnsureFunc {
     )
 
     await collection.createIndex(
-      { aggregateId: 1, version: 1 },
+      { readerId: 1, version: 1 },
       { name: 'es-aggregate-version', unique: true }
     )
 
