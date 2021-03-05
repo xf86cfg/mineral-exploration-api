@@ -2,11 +2,9 @@ import { Timestamp } from 'mongodb'
 
 export type Command = {
   aggregateId: string
-  type: string
 }
 
 export type ESEvent = {
-  type: string
   aggregateId: string
 }
 

@@ -8,21 +8,18 @@ import {
 
 type Event = {
   aggregateId: string
-  type: string
   payload: any
 }
 
 const tests: Event[] = [
   {
     aggregateId: 'instrument-1',
-    type: 'stream-1',
     payload: {
       data: 'data-1',
     },
   },
   {
     aggregateId: 'instrument-1',
-    type: 'stream-2',
     payload: {
       data: 'data-2',
     },

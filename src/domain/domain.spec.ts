@@ -2,7 +2,7 @@ import { resetTestDb } from '../test-helpers'
 import { readingCmd } from './command-handlers'
 import { expect } from 'chai'
 
-describe.only('Handlers tests', async () => {
+describe('Handlers tests', async () => {
   before(async () => {
     await resetTestDb()
   })
@@ -10,7 +10,6 @@ describe.only('Handlers tests', async () => {
   it('Will ensure command handler produces events', async () => {
     const actual1 = await readingCmd.RecordReading({
       aggregateId: 'reader-1',
-      type: 'RecordReading',
       latitude: 12.345678,
       longitude: 23.456789,
       metadata: 'data-1',
@@ -19,7 +18,6 @@ describe.only('Handlers tests', async () => {
 
     const actual2 = await readingCmd.RecordReading({
       aggregateId: 'reader-1',
-      type: 'RecordReading',
       latitude: 12.345678,
       longitude: 23.456789,
       metadata: 'data-2',
@@ -28,7 +26,6 @@ describe.only('Handlers tests', async () => {
 
     const actual3 = await readingCmd.RecordReading({
       aggregateId: 'reader-2',
-      type: 'RecordReading',
       latitude: 12.345678,
       longitude: 23.456789,
       metadata: 'data-3',

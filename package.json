@@ -44,6 +44,7 @@
     "mongo:kill": "docker kill mongodb",
     "mongo:remove": "docker container rm -f -v mongodb && docker volume rm mongodata",
     "test": "env-cmd -f test.env mocha -t 20000 --reporter spec --exit 'dist/**/*.spec.js'",
-    "testonly": "env-cmd -f test.env mocha -t 20000 --exit 'dist/**/*.spec.js'"
+    "testonly": "env-cmd -f test.env mocha -t 20000 --exit 'dist/**/*.spec.js'",
+    "mongo:migrate": "node dist/migrations/run.js"
   }
 }

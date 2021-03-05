@@ -73,7 +73,6 @@ export function createStoreWriter<TEvt extends ESEvent>(storeName: string) {
     const tentativeEvent = {
       aggregateId: event.aggregateId,
       version: ++version,
-      type: event.type,
       event,
       position: new Timestamp(0, 0),
       timestamp: new Date(Date.now()),
