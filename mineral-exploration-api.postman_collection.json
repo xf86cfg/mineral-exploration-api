@@ -1,0 +1,246 @@
+{
+	"info": {
+		"_postman_id": "c45b8014-d476-45c4-98b5-7fe04ea2f221",
+		"name": "mineral-exploration-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/api/healthcheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://6hx2wweu9f.execute-api.ap-southeast-1.amazonaws.com/api/healthcheck",
+					"protocol": "https",
+					"host": [
+						"6hx2wweu9f",
+						"execute-api",
+						"ap-southeast-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"api",
+						"healthcheck"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/readings",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"readerId\": \"reader-1\",\n    \"latitude\": 10.123,\n    \"longitude\": 20.123,\n    \"dip\": 11,\n    \"depth\": 200,\n    \"azimuth\": 100,\n    \"invalid\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://6hx2wweu9f.execute-api.ap-southeast-1.amazonaws.com/api/readings",
+					"protocol": "https",
+					"host": [
+						"6hx2wweu9f",
+						"execute-api",
+						"ap-southeast-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"api",
+						"readings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/readings?latitude=10.123&longitude=20.123",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"latitude\": 10.123,\n    \"longitude\": 20.123\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://6hx2wweu9f.execute-api.ap-southeast-1.amazonaws.com/api/readings?latitude=10.123&longitude=20.123",
+					"protocol": "https",
+					"host": [
+						"6hx2wweu9f",
+						"execute-api",
+						"ap-southeast-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"api",
+						"readings"
+					],
+					"query": [
+						{
+							"key": "latitude",
+							"value": "10.123"
+						},
+						{
+							"key": "longitude",
+							"value": "20.123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/readings?latitude=20.123&longitude=30.123",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"latitude\": 10.123,\n    \"longitude\": 20.123\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://6hx2wweu9f.execute-api.ap-southeast-1.amazonaws.com/api/readings?latitude=20.123&longitude=30.123",
+					"protocol": "https",
+					"host": [
+						"6hx2wweu9f",
+						"execute-api",
+						"ap-southeast-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"api",
+						"readings"
+					],
+					"query": [
+						{
+							"key": "latitude",
+							"value": "20.123"
+						},
+						{
+							"key": "longitude",
+							"value": "30.123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/readings/invalid?latitude=10.123&longitude=20.123",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"latitude\": 10.123,\n    \"longitude\": 20.123\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://6hx2wweu9f.execute-api.ap-southeast-1.amazonaws.com/api/readings/invalid?latitude=10.123&longitude=20.123",
+					"protocol": "https",
+					"host": [
+						"6hx2wweu9f",
+						"execute-api",
+						"ap-southeast-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"api",
+						"readings",
+						"invalid"
+					],
+					"query": [
+						{
+							"key": "latitude",
+							"value": "10.123"
+						},
+						{
+							"key": "longitude",
+							"value": "20.123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/readings/invalid?latitude=20.123&longitude=30.123",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"latitude\": 10.123,\n    \"longitude\": 20.123\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://6hx2wweu9f.execute-api.ap-southeast-1.amazonaws.com/api/readings/invalid?latitude=20.123&longitude=30.123",
+					"protocol": "https",
+					"host": [
+						"6hx2wweu9f",
+						"execute-api",
+						"ap-southeast-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"api",
+						"readings",
+						"invalid"
+					],
+					"query": [
+						{
+							"key": "latitude",
+							"value": "20.123"
+						},
+						{
+							"key": "longitude",
+							"value": "30.123"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
