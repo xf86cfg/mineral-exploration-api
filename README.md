@@ -10,6 +10,7 @@
 - yarn
 - yarn mongo:docker
 - yarn build && yarn test
+- yarn mongo:migrate
 - yarn start
 
 # Assignment Decomposition
